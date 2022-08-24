@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 
 export const PokemonList = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [pokemonsFiltered, setPokemonsFiltered] = useState<Pokemon[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -18,6 +19,7 @@ export const PokemonList = () => {
       try {
         const pokemonListResponse = await getPokemonList();
         setPokemons(pokemonListResponse);
+        setPokemonsFiltered(pokemonListResponse);
       } catch (error) {
         setError(error);
       } finally {
@@ -25,11 +27,25 @@ export const PokemonList = () => {
       }
     };
     onLoad();
-  });
+  }, []);
 
+  const handleSearchPokemon = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const search = event.target.value.toUpperCase();
+    const filteredPokemons = pokemons.filter((pokemon) =>
+      pokemon.name.toUpperCase().includes(search)
+    );
+    setPokemonsFiltered(filteredPokemons);
+  };
   return (
     <>
       <h1 className='title'>Pokemon List</h1>
+
+      <label htmlFor='site-search'>Search pokemons:</label>
+      <input
+        id='site-search'
+        name='site-search'
+        onChange={handleSearchPokemon}
+      />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label='simple table'>
           <TableHead>
@@ -39,7 +55,7 @@ export const PokemonList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {pokemons.map((row) => (
+            {pokemonsFiltered.map((row) => (
               <TableRow
                 key={row.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
