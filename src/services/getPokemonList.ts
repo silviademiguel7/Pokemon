@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { sortAlphabetically } from '../utils/sortAlphabetically.ts';
+import { sortAlphabetically } from '../utils/sortAlphabetically';
 
 export interface Pokemon {
   name: string;

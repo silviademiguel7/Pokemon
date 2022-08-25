@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { getPokemonList, Pokemon } from '../../services/getPokemonList.ts';
+import { getPokemonList, Pokemon } from '../../services/getPokemonList';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -17,14 +17,14 @@ export const PokemonList = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [filterValue, setFilterValue] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(undefined);
 
   useEffect(() => {
     const onLoad = async () => {
       try {
         const pokemonListResponse = await getPokemonList();
         setPokemons(pokemonListResponse);
-      } catch (error) {
+      } catch (error: any) {
         setError(error);
       } finally {
         setIsLoading(false);

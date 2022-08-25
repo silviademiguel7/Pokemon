@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import {
   getPokemonDetail,
   PokemonDetail as PokemonDetailEntity,
-} from '../../services/getPokemonDetail.ts';
+} from '../../services/getPokemonDetail';
 import { useNavigate } from 'react-router-dom';
 import ReactLoading from 'react-loading';
 import Chip from '@mui/joy/Chip';
@@ -13,8 +13,16 @@ import ChipDelete from '@mui/joy/ChipDelete';
 export const PokemonDetail = () => {
   let navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const [pokemonDetail, setPokemonDetail] =
-    useState<PokemonDetailEntity>(undefined);
+  const [pokemonDetail, setPokemonDetail] = useState<PokemonDetailEntity>({
+    abilities: [],
+    name: '',
+    sprites: {
+      back_default: '',
+    },
+    id: '',
+    isBattleOnly: false,
+    moves: [],
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [movements, setMovements] = useState<PokemonDetailEntity['moves']>([]);
@@ -28,7 +36,7 @@ export const PokemonDetail = () => {
       const detail = await getPokemonDetail(id);
       setPokemonDetail(detail);
       setMovements(detail.moves.slice(0, 10));
-    } catch (error) {
+    } catch (error: any) {
       setError(error);
     } finally {
       setIsLoading(false);
@@ -77,7 +85,7 @@ export const PokemonDetail = () => {
           <div className='pokemon-detail-field__label'>
             <span> Forma solo en batalla:</span>
             <span className='pokemon-detail-field__value'>
-              <span>{pokemonDetail.isBatleOnlue ? 'Si' : 'No'}</span>
+              <span>{pokemonDetail.isBattleOnly ? 'Si' : 'No'}</span>
             </span>
           </div>
 
