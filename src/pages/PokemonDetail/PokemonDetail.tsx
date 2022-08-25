@@ -102,29 +102,38 @@ export const PokemonDetail = () => {
           <div className='pokemon-detail-field__label'>
             Movimientos:
             <div>
-              <ul>
-                {movements.map((move) => {
-                  return (
-                    <li className='pokemon-detail-field__value' key={move.name}>
-                      <span>{move.name}</span>
-                      <Chip
-                        variant='outlined'
-                        color='danger'
-                        onClick={() => handleDeleteClick(move.name)}
-                        endDecorator={
-                          <ChipDelete
-                            color='danger'
-                            variant='plain'
-                            onClick={() => handleDeleteClick(move.name)}
-                          ></ChipDelete>
-                        }
+              {movements.length > 0 ? (
+                <ul>
+                  {movements.map((move) => {
+                    return (
+                      <li
+                        className='pokemon-detail-field__value'
+                        key={move.name}
                       >
-                        Eliminar
-                      </Chip>
-                    </li>
-                  );
-                })}
-              </ul>
+                        <span>{move.name}</span>
+                        <Chip
+                          variant='outlined'
+                          color='danger'
+                          onClick={() => handleDeleteClick(move.name)}
+                          endDecorator={
+                            <ChipDelete
+                              color='danger'
+                              variant='plain'
+                              onClick={() => handleDeleteClick(move.name)}
+                            ></ChipDelete>
+                          }
+                        >
+                          Eliminar
+                        </Chip>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <span className='pokemon-detail-field__value'>
+                  No hay movimientos
+                </span>
+              )}
             </div>
           </div>
         </div>
