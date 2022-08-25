@@ -20,7 +20,7 @@ export const PokemonDetail = () => {
   const [movements, setMovements] = useState<PokemonDetailEntity['moves']>([]);
 
   const onLoad = async () => {
-    if (id === undefined) {
+    if (id === undefined || isNaN(parseInt(id))) {
       navigate('/pokemons/', { replace: true });
       return;
     }
