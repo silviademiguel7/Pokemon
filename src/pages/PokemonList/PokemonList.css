@@ -1,0 +1,27 @@
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  height: 100%;
+}
+
+.search-container__filterInput {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 20px 0px;
+}
+
+.input {
+  border-color: aquamarine;
+  border: solid 3px rgb(120, 160, 160);
+  height: 25px;
+  width: 400px;
+  font-size: 20px;
+  color: rgb(34, 30, 30);
+  padding: 17px;
+}
