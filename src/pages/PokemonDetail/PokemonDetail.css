@@ -49,3 +49,23 @@
 .pokemon-detail-field__value > span {
   margin-right: 10px;
 }
+
+@media (max-width: 768px) {
+  .pokemon-container {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .pokemon-detail {
+    width: 100%;
+  }
+
+  .pokemon-image {
+    text-align: center;
+    width: 100%;
+  }
+
+  h1 {
+    text-align: center;
+  }
+}
