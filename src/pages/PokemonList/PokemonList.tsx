@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './PokemonList.css';
+
 import { getPokemonList, Pokemon } from '../../services/getPokemonList.ts';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
