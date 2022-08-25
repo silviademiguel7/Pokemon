@@ -68,7 +68,7 @@ export const PokemonList = () => {
         />
       </SearchWrapper>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+        <Table sx={{ minWidth: 650 }} aria-label='sticky table'>
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
@@ -117,6 +117,9 @@ const SearchWrapper = styled.div`
   justify-content: center;
   text-align: center;
   margin: 20px 0px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -127,6 +130,9 @@ const SearchInput = styled.input`
   font-size: 20px;
   color: rgb(34, 30, 30);
   padding: 17px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const SearchLabel = styled.label`
