@@ -82,6 +82,7 @@ export const PokemonList = () => {
               )
               .map((pokemon) => (
                 <TableRow
+                  id={pokemon.name}
                   key={pokemon.name}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   onClick={() => {
