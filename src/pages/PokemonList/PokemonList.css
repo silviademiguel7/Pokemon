@@ -14,6 +14,10 @@
   margin: 20px 0px;
 }
 
+.search-container__filterInput-label {
+  margin-right: 8px;
+}
+
 .input {
   border-color: aquamarine;
   border: solid 3px rgb(120, 160, 160);
