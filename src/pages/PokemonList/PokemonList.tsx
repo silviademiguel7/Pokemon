@@ -41,7 +41,7 @@ export const PokemonList = () => {
   const handleClickPokemon = (url: string) => {
     const idUrl = url.split('https://pokeapi.co/api/v2/pokemon/')[1];
     const id = idUrl.split('/')[0];
-    navigate(`/pokemons/${id}`, { replace: true });
+    navigate(`/pokemons/${id}`);
   };
 
   if (isLoading) {
