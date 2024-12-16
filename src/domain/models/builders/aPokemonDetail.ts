@@ -1,6 +1,6 @@
 import { PokemonDetail } from "../PokemonDetail";
 
-export const aPokemonDetail = (options: Partial<PokemonDetail>) => {
+export const aPokemonDetail = (options?: Partial<PokemonDetail>) => {
 	const defaultValue: PokemonDetail = {
 		id: "1",
 		name: "bulbasaur",
