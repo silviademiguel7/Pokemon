@@ -1,7 +1,10 @@
 import { ServerError } from "../domain/models/ServerError";
 import { ServerErrorType } from "../domain/models/ServerErrorType";
 
-export const serviceErrorHandler = (error: ServerError) => {
+export const serviceErrorHandler = (
+	error: ServerError,
+	callback: () => void
+) => {
 	const serverErrorType = getTypeOfServerErrror(error);
 
 	switch (serverErrorType) {
@@ -12,7 +15,8 @@ export const serviceErrorHandler = (error: ServerError) => {
 		case "InMaintenance":
 			throw new Error("In maintenance");
 		case "RequestError":
-			throw new Error("Request error");
+			callback();
+			break;
 	}
 };
 
