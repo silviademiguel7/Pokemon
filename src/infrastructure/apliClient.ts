@@ -10,7 +10,6 @@ const config = {
 const axiosInstance = axios.create(config);
 axiosInstance.interceptors.response.use(undefined, (error) => {
 	const serverError = buildServerError(error);
-	console.log("serverError", serverError);
 	return Promise.reject(serverError);
 });
 
