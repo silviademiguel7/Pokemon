@@ -13,6 +13,7 @@
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "axios": "^0.27.2",
+    "env-cmd": "^10.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-loading": "^2.0.3",
@@ -24,9 +25,15 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "local": "env-cmd -e LOCAL npm run start",
+    "int": "env-cmd -e INT npm run start",
+    "pre": "env-cmd -e PRE npm run start",
+    "pro": "env-cmd -e PRO npm run start",
     "build": "react-scripts build",
-    "test": "jest --watch",
-    "eject": "react-scripts eject"
+    "test": "jest --watchAll",
+    "eject": "react-scripts eject",
+    "build:int": "env-cmd INT npm run build",
+    "build:pro": "env-cmd PRO npm run build"
   },
   "eslintConfig": {
     "extends": [
