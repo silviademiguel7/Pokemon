@@ -1,105 +1,131 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { getPokemonList, Pokemon } from '../../services/getPokemonList';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { useNavigate } from 'react-router-dom';
-import ReactLoading from 'react-loading';
-import styled from 'styled-components';
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import ReactLoading from "react-loading";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { Pokemon } from "../../domain/models/Pokemon";
+import { isServiceError, ServiceError } from "../../domain/models/ServiceError";
+import {
+	getPokemonList,
+	getPokemosListServiceError,
+} from "../../domain/services/getPokemonList";
 
 export const PokemonList = () => {
-  let navigate = useNavigate();
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-  const [filterValue, setFilterValue] = useState<string>('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<any>(undefined);
+	let navigate = useNavigate();
+	const [pokemons, setPokemons] = useState<Pokemon[]>();
+	const [filterValue, setFilterValue] = useState<string>("");
+	const [error, setError] = useState<
+		ServiceError<getPokemosListServiceError> | undefined
+	>(undefined);
 
-  useEffect(() => {
-    const onLoad = async () => {
-      try {
-        const pokemonListResponse = await getPokemonList();
-        setPokemons(pokemonListResponse);
-      } catch (error: any) {
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    onLoad();
-  }, []);
+	useEffect(() => {
+		const onLoad = async () => {
+			try {
+				const pokemonListResponse = await getPokemonList();
+				setPokemons(pokemonListResponse);
+			} catch (error: any) {
+				if (isServiceError<getPokemosListServiceError>(error)) {
+					setError(error);
+					return;
+				}
+				throw error;
+			}
+		};
+		onLoad();
+	}, []);
 
-  const handleChangeFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const filterValue = event.target.value.toUpperCase();
-    setFilterValue(filterValue);
-  };
+	const handleChangeFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const filterValue = event.target.value.toUpperCase();
+		setFilterValue(filterValue);
+	};
 
-  const handleClickPokemon = (url: string) => {
-    const idUrl = url.split('https://pokeapi.co/api/v2/pokemon/')[1];
-    const id = idUrl.split('/')[0];
-    navigate(`/pokemons/${id}`);
-  };
+	const handleClickPokemon = (url: string) => {
+		const idUrl = url.split("https://pokeapi.co/api/v2/pokemon/")[1];
+		const id = idUrl.split("/")[0];
+		navigate(`/pokemons/${id}`);
+	};
 
-  if (isLoading) {
-    return (
-      <Container>
-        <ReactLoading type='balls' color='ffffff' height={66} width={66} />
-      </Container>
-    );
-  }
-  if (error) {
-    return <Container>Ha habido un error de carga</Container>;
-  }
-  return (
-    <Container>
-      <h1>Pokemons</h1>
-      <SearchWrapper>
-        <SearchLabel htmlFor='inputText'>Busca pokemons</SearchLabel>
-        <SearchInput
-          type='text'
-          id='inputText'
-          name='inputText'
-          placeholder='...'
-          onChange={handleChangeFilter}
-        />
-      </SearchWrapper>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label='sticky table'>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align='right'>URL</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {pokemons
-              .filter((pokemon) =>
-                pokemon.name.toUpperCase().includes(filterValue)
-              )
-              .map((pokemon) => (
-                <TableRow
-                  id={pokemon.name}
-                  key={pokemon.name}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  onClick={() => {
-                    handleClickPokemon(pokemon.url);
-                  }}
-                >
-                  <TableCell component='th' scope='row'>
-                    {pokemon.name}
-                  </TableCell>
-                  <TableCell align='right'>{pokemon.url}</TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Container>
-  );
+	if (error) {
+		return (
+			<Container>
+				Ha habido un error de carga:
+				<p>{error.message}</p>
+			</Container>
+		);
+	}
+
+	if (pokemons === undefined) {
+		return (
+			<Container>
+				<ReactLoading
+					type='balls'
+					color='ffffff'
+					height={66}
+					width={66}
+				/>
+			</Container>
+		);
+	}
+
+	return (
+		<Container>
+			<h1>Pokemons</h1>
+			<SearchWrapper>
+				<SearchLabel htmlFor='inputText'>Busca pokemons</SearchLabel>
+				<SearchInput
+					type='text'
+					id='inputText'
+					name='inputText'
+					placeholder='...'
+					onChange={handleChangeFilter}
+				/>
+			</SearchWrapper>
+			<TableContainer component={Paper}>
+				<Table
+					sx={{ minWidth: 650 }}
+					aria-label='sticky table'
+				>
+					<TableHead>
+						<TableRow>
+							<TableCell>Name</TableCell>
+							<TableCell align='right'>URL</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{pokemons
+							.filter((pokemon) =>
+								pokemon.name.toUpperCase().includes(filterValue)
+							)
+							.map((pokemon) => (
+								<TableRow
+									id={pokemon.name}
+									key={pokemon.name}
+									sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+									onClick={() => {
+										handleClickPokemon(pokemon.url);
+									}}
+								>
+									<TableCell
+										component='th'
+										scope='row'
+									>
+										{pokemon.name}
+									</TableCell>
+									<TableCell align='right'>{pokemon.url}</TableCell>
+								</TableRow>
+							))}
+					</TableBody>
+				</Table>
+			</TableContainer>
+		</Container>
+	);
 };
 
 const Container = styled.main`
