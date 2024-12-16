@@ -49,7 +49,10 @@ export const PokemonDetail = () => {
 
 	if (pokemonDetail === undefined) {
 		return (
-			<main className='main-content'>
+			<main
+				className='main-content'
+				data-testid='loading'
+			>
 				<ReactLoading
 					type='balls'
 					color='ffffff'
