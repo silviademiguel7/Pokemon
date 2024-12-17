@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 
 import { apiClient } from "../../../infrastructure/apliClient";
 import { aPoKemon } from "../../models/builders/aPokemon";
+import { isServerError, ServerError } from "../../models/ServerError";
 import { ServiceError } from "../../models/ServiceError";
 import { getPokemonList, getPokemosListServiceError } from "../getPokemonList";
 
@@ -59,5 +60,30 @@ describe("getPokemonList", () => {
 		// Assert
 		expect(error instanceof ServiceError).toBe(true);
 		expect(error?.type).toBe("NoResultsError");
+	});
+
+	it("should throw error when there is an server error", async () => {
+		// Arrange
+		jest.spyOn(apiClient, "get").mockRejectedValue({
+			config: { method: "GET", url: "pokemon?limit=11" },
+			headers: {},
+			data: {},
+			status: 500,
+			statusText: "Internal Server Error",
+		});
+
+		// Act
+		let error: ServerError | undefined;
+
+		try {
+			await getPokemonList();
+		} catch (err: any) {
+			error = err;
+		}
+
+		// Assert
+		expect(isServerError(error)).toBe(true);
+		expect(error?.status).toBe(500);
+		expect(error?.statusText).toBe("Internal Server Error");
 	});
 });

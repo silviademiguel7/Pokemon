@@ -3,6 +3,7 @@ import { apiClient } from "../../../infrastructure/apliClient";
 import { aPokemonDetailDTO } from "../../dtos/builders/aPokemonDetailDTO";
 
 import { aPokemonDetail } from "../../models/builders/aPokemonDetail";
+import { isServerError, ServerError } from "../../models/ServerError";
 import { isServiceError, ServiceError } from "../../models/ServiceError";
 import {
 	getPokemonDetail,
@@ -65,5 +66,32 @@ describe("getPokemonDetail", () => {
 		// Assert
 		expect(isServiceError(error)).toBe(true);
 		expect(error?.type).toBe("InvalidIdError");
+	});
+
+	it("should throw service error when there is an error in the request", async () => {
+		// Arrange
+		jest.spyOn(apiClient, "get").mockRejectedValue({
+			config: {
+				method: "GET",
+				url: "pokemon/1",
+			},
+			headers: {},
+			data: {},
+			status: 500,
+			statusText: "Internal Server Error",
+		});
+
+		// Act
+		let error: ServerError | undefined;
+		try {
+			await getPokemonDetail("1");
+		} catch (e: any) {
+			error = e;
+		}
+
+		// Assert
+		expect(isServerError(error)).toBe(true);
+		expect(error?.status).toBe(500);
+		expect(error?.statusText).toBe("Internal Server Error");
 	});
 });
