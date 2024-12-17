@@ -29,6 +29,7 @@ export const PokemonList = () => {
 		const onLoad = async () => {
 			try {
 				const pokemonListResponse = await getPokemonList();
+
 				setPokemons(pokemonListResponse);
 			} catch (error: any) {
 				if (isServiceError<getPokemosListServiceError>(error)) {
@@ -65,6 +66,7 @@ export const PokemonList = () => {
 		return (
 			<Container>
 				<ReactLoading
+					data-testid='loading'
 					type='balls'
 					color='ffffff'
 					height={66}
