@@ -65,10 +65,11 @@ export const PokemonDetail = () => {
 
 	return (
 		<main className='main-content'>
-			<h1>Pokemon {pokemonDetail.name}</h1>
+			<h1 data-testid='pokemon-name'>Pokemon {pokemonDetail.name}</h1>
 			<div className='pokemon-container'>
-				<div className='pokemon-image'>
+				<div>
 					<img
+						data-testid='pokemon-image'
 						src={pokemonDetail.sprites.back_default}
 						alt={pokemonDetail.name}
 					/>
@@ -78,21 +79,23 @@ export const PokemonDetail = () => {
 					<div className='pokemon-detail-field__label'>
 						<span>Id:</span>
 						<span className='pokemon-detail-field__value'>
-							<span>{pokemonDetail.id}</span>
+							<span data-testid='pokemon-id'>{pokemonDetail.id}</span>
 						</span>
 					</div>
 
 					<div className='pokemon-detail-field__label'>
 						<span> Forma solo en batalla:</span>
 						<span className='pokemon-detail-field__value'>
-							<span>{pokemonDetail.isBattleOnly ? "Si" : "No"}</span>
+							<span data-testid='pokemon-type'>
+								{pokemonDetail.isBattleOnly ? "Si" : "No"}
+							</span>
 						</span>
 					</div>
 
 					<div className='pokemon-detail-field__label'>
 						Habilidades:
 						<div>
-							<ul>
+							<ul data-testid='pokemon-abilities'>
 								{pokemonDetail.abilities.map((ability) => {
 									return (
 										<li
@@ -111,7 +114,7 @@ export const PokemonDetail = () => {
 						Movimientos:
 						<div>
 							{movements.length > 0 ? (
-								<ul>
+								<ul data-testid='pokemon-moves'>
 									{movements.map((move) => {
 										return (
 											<li
