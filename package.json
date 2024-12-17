@@ -30,7 +30,7 @@
     "pre": "env-cmd -e PRE npm run start",
     "pro": "env-cmd -e PRO npm run start",
     "build": "react-scripts build",
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --coverage",
     "eject": "react-scripts eject",
     "build:int": "env-cmd INT npm run build",
     "build:pro": "env-cmd PRO npm run build"
