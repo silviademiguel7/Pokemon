@@ -12,8 +12,11 @@
     "@types/node": "^18.7.13",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^8.18.1",
+    "@typescript-eslint/parser": "^8.18.1",
     "axios": "^0.27.2",
     "env-cmd": "^10.1.0",
+    "eslint-plugin-react": "^7.37.2",
     "lint-staged": "^15.2.11",
     "prettier": "^3.4.2",
     "react": "^18.2.0",
@@ -37,13 +40,23 @@
     "eject": "react-scripts eject",
     "build:int": "env-cmd INT npm run build",
     "build:pro": "env-cmd PRO npm run build",
-    "prepare": "husky"
+    "prepare": "husky install",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix"
   },
   "eslintConfig": {
     "extends": [
+      "eslint:recommended",
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    }
   },
   "browserslist": {
     "production": [
