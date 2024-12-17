@@ -1,0 +1,12 @@
+echo "Running tests..."
+
+if [ -n "$(git status --porcelain)" ]; then
+  echo "You have unstaged changes. Please commit or stash them before running tests."
+  exit 1
+fi
+
+if ! npm test; then
+  echo "Tests failed. Please fix the failing tests before pushing."
+  exit 1
+fi
+

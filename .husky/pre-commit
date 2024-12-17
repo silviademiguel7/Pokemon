@@ -1,1 +1,2 @@
-npm run test-ci
+echo "Fixing code style issues..."
+
