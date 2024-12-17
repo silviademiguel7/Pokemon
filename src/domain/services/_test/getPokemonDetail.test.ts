@@ -92,6 +92,6 @@ describe("getPokemonDetail", () => {
 		// Assert
 		expect(isServerError(error)).toBe(true);
 		expect(error?.status).toBe(500);
-		expect(error?.statusText).toBe("Internal Server Error");
+		expect(error?.statusText).toBe("Internal Server");
 	});
 });

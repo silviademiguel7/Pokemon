@@ -5,7 +5,7 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1
 fi
 
-if ! npm test; then
+if ! npm run test-ci; then
   echo "Tests failed. Please fix the failing tests before pushing."
   exit 1
 fi
