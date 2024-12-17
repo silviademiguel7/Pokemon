@@ -7,7 +7,7 @@ const config = {
 		"Content-Type": "application/json",
 	},
 };
-const axiosInstance = axios.create(config);
+export const axiosInstance = axios.create(config);
 axiosInstance.interceptors.response.use(undefined, (error) => {
 	const serverError = buildServerError(error);
 	return Promise.reject(serverError);
