@@ -8,7 +8,7 @@ export type getPokemonDetailServiceError = "InvalidIdError";
 
 export const getPokemonDetail = async (id: string): Promise<PokemonDetail> => {
 	if (isNaN(parseInt(id))) {
-		buildServiceError<getPokemonDetailServiceError>({
+		throw buildServiceError<getPokemonDetailServiceError>({
 			type: "InvalidIdError",
 			message: "Invalid id",
 		});
