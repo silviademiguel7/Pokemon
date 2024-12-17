@@ -1,7 +1,7 @@
 import { apiClient } from "../../infrastructure/apliClient";
 import { buildServiceError } from "../../infrastructure/buildServiceError";
 import { PokemonDetailDTO } from "../dtos/PokemonDetailDTO";
-import { buildPokemonDetail } from "../factory/buildPokemontDetail";
+import { buildPokemonDetail } from "../factories/buildPokemontDetail";
 import { PokemonDetail } from "../models/PokemonDetail";
 
 export type getPokemonDetailServiceError = "InvalidIdError";
