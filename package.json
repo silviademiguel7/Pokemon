@@ -31,9 +31,11 @@
     "pro": "env-cmd -e PRO npm run start",
     "build": "react-scripts build",
     "test": "jest --watchAll --coverage",
+    "test-ci": "jest",
     "eject": "react-scripts eject",
     "build:int": "env-cmd INT npm run build",
-    "build:pro": "env-cmd PRO npm run build"
+    "build:pro": "env-cmd PRO npm run build",
+    "prepare": "husky"
   },
   "eslintConfig": {
     "extends": [
