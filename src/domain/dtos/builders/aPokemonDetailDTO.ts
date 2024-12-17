@@ -1,6 +1,6 @@
 import { PokemonDetailDTO } from "../PokemonDetailDTO";
 
-export const aPokemonDetailDTO = (options: Partial<PokemonDetailDTO>) => {
+export const aPokemonDetailDTO = (options?: Partial<PokemonDetailDTO>) => {
 	const defaultValue: PokemonDetailDTO = {
 		id: "1",
 		name: "bulbasaur",
