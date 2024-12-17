@@ -1,2 +1,2 @@
 echo "Fixing code style issues..."
-
+lint-staged

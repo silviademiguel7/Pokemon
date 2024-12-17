@@ -14,6 +14,8 @@
     "@types/react-dom": "^18.0.6",
     "axios": "^0.27.2",
     "env-cmd": "^10.1.0",
+    "lint-staged": "^15.2.11",
+    "prettier": "^3.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-loading": "^2.0.3",
@@ -53,6 +55,11 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
     ]
   },
   "devDependencies": {
